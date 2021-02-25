@@ -1,4 +1,4 @@
-# CRUD Básico PHP-PDO
+# Reportes PDF PHP-PDO
 Crud de imagenes en php.
 ------------
 

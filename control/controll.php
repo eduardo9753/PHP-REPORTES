@@ -5,8 +5,6 @@ include_once('datos/Personal.php');
 include_once('datos/paginacion.php');
 require('pdf/fpdf.php');
 
-//intenta cargar el modelo de la paginacion aqui
-
 
 class Control
 {

@@ -1,0 +1,157 @@
+html{
+  font-family: 'Montserrat', sans-serif;
+}
+/*ESTILOS CHART*/
+.myChart {
+  width: 100%;
+  height: 100%;
+}
+.center {
+  text-align: center;
+  color: #000;
+}
+.vacuna {
+  width: 100%;
+  border: 0;
+  text-align: center;
+}
+
+.sin_raya{ text-decoration: none; list-style: none;}
+
+/*ESTILOS ESTADISTICA CHARTJS*/
+.borde-no-vacunado {
+  border: 1px solid rgba(255, 99, 132, 1);
+  background-color: rgba(255, 99, 132, 0.2);
+}
+.borde-vacunado {
+  border: 1px solid rgba(54, 162, 235, 1);
+  background-color: rgba(54, 162, 235, 0.2);
+}
+.borde-revocatoria {
+  border: 1px solid rgba(9, 18, 70, 1);
+  background-color: rgba(9, 18, 70, 0.2);
+}
+.borde-desistir {
+  border: 1px solid rgba(22, 236, 40, 1);
+  background-color: rgba(22, 236, 40, 0.2);
+}
+.borde-otro-centro {
+  border: 1px solid rgba(243, 10, 41, 1);
+  background-color: rgba(243, 10, 41, 0.2);
+}
+.totales {
+  border: 1px solid rgba(255, 206, 86, 1);
+  background-color: rgba(255, 206, 86, 0.2);
+}
+
+.mover-izquierda{
+  position: fixed;
+  z-index: 999;
+  width: 100%;
+  animation: MoverNosotros .6s;
+}
+
+/*ANIMACIONES KEYFRAME*/
+@keyframes MoverNosotros{
+0%{
+    opacity: 0;
+    transform: translateX(-200px);
+}
+100%{
+    opacity: 1;
+    transform: translateY(0);
+}
+}
+
+.centrar{ align-items: center;}
+
+/*borde rojo por defecto 0(<--seleccion-->)*/
+.blue{border: 1px solid blue;}
+
+
+/*borde verde desistir (3)*/
+.green{border: 1px solid rgb(60, 226, 26); background-color: rgba(46, 226, 23, .1);}
+
+
+/*borde amarillo vacunado por otro centro de salud (4)*/
+.yellow{border: 1px solid rgb(247, 243, 13); background-color:rgba(252, 248, 19, 0.1);}
+
+/*ESTILOS PREGUNTAS*/
+.triaje .form-group label .pregunta{
+  color: #000;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  font-size: 16px;
+  font-weight: 300;
+  text-transform: uppercase;
+}
+
+/*contenerdor de la img previa*/
+.img-vista{
+  width: 100%;
+  height: 230px;
+  border-radius: 100%;
+}
+
+/*estilos de la img previa*/
+#imgPreview{
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+}
+
+
+.boton{
+  text-decoration: none;
+  list-style: none;
+  width: 100%;
+  display: inline-block;
+  padding: 8px;
+  color: #fff;
+  border: none;
+  text-align: center;
+  border-radius: 5px;
+  transition: all .3s ease-in-out;
+}
+
+.color-excel { background-color: rgba(10, 161, 23, 0.8);}
+.color-excel:hover{ text-decoration: none; background-color: rgba(10, 161, 23, 0.9);}
+
+.color-morado { background-color: #502267;}
+.color-morado:hover { text-decoration: none; background-color: #650e91;}
+
+
+/*ESTILOS NAV*/
+.color-nav{ background-color: #502267;}
+.morado{ color: #502267;}
+
+/*ESTILOS LOGO MENU*/
+.logo img{ border-radius: 10px; width: 160px; height: 75px;}
+
+
+.dosis{
+  background-color: #502267;
+  color: #fff;
+  width: 100%;
+  border: 1px solid #650e91;
+  padding: 8px;
+  text-align: center;
+  text-transform: uppercase;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+
+.mover-dosis{
+  animation: MoverNosotros 1s;
+}
+
+/*ANIMACIONES KEYFRAME*/
+@keyframes MoverNosotros{
+0%{
+    opacity: 0;
+    transform: translateX(-200px);
+}
+100%{
+    opacity: 1;
+    transform: translateY(0);
+}
+}

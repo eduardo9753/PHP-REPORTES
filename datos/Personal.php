@@ -3,36 +3,64 @@
 class Personal
 {
     private $idDNI;
+    private $foto;
     private $nombre;
     private $apellidoPaterno;
-
     private $apellidoMaterno;
     private $fecha;
     private $actividad;
     private $profesion;
 
-    private $checkCovid;
-    private $checkDiris;
+    private $checkfiebre;
+    private $descfiebre;
+    private $checkgarganta;
+    private $descgarganta;
+    private $checkcovid;
+    private $desccovid;
+    private $checkembarazo;
+    private $descembarazo;
+    private $checkalergia;
+    private $descalergia;
 
-    private $checkVacuna;
+
     private $idBrigada;
     private $observacion;
     private $estado;
+    private $fechaRegistro;
+    private $planilla;
+    private $telefono;
+    private $estadoDosisUno;
+    private $estadoDosisDos;
+    private $cartilla; 
 
     public function __construct()
     {
         $this->idDNI = 0;
         $this->nombre = "";
+        $this->foto ="";
         $this->apellidoPaterno  = "";
         $this->apellidoMaterno = "";
         $this->fecha = "";
-        $this->actividad = 0;
+        $this->actividad = "";
         $this->profesion = "";
-        $this->checkCovid  = "";
-        $this->checkDiris = "";
-        $this->checkVacuna = "";
+        $this->checkfiebre = "";
+        $this->descfiebre = "";
+        $this->checkgarganta = "";
+        $this->descgarganta = "";
+        $this->checkcovid = "";
+        $this->desccovid = "";
+        $this->checkembarazo = "";
+        $this->descembarazo = "";
+        $this->checkalergia = "";
+        $this->descalergia = "";
         $this->idBrigada = "";
         $this->estado = "";
+        $this->fechaRegistro ="";
+        $this->planilla = "";
+        $this->telefono =0;
+        $this->estadoDosisUno =0;
+        $this->estadoDosisDos =0;
+        $this->cartilla ="";
     }
 
     function setidDNI($idDNI)
@@ -43,8 +71,6 @@ class Personal
     {
         return $this->idDNI;
     }
-
-
 
     function setnombre($nombre)
     {
@@ -73,8 +99,6 @@ class Personal
         return $this->apellidoMaterno;
     }
 
-
-
     function setfecha($fecha)
     {
         $this->fecha = $fecha;
@@ -83,7 +107,6 @@ class Personal
     {
         return $this->fecha;
     }
-
 
     function setactividad($actividad)
     {
@@ -105,35 +128,103 @@ class Personal
     }
 
 
-    function setcheckCovid($checkCovid)
+
+
+    //CHECK DE LAS PREGUNTAS
+    function setcheckfiebre($checkfiebre)
     {
-        $this->checkCovid = $checkCovid;
+        $this->checkfiebre = $checkfiebre;
     }
-    function getcheckCovid()
+    function getcheckfiebre()
     {
-        return $this->checkCovid;
+        return $this->checkfiebre;
+    }
+    function setcheckdescfiebre($descfiebre)
+    {
+        $this->descfiebre = $descfiebre;
+    }
+    function getcheckdescfiebre()
+    {
+        return $this->descfiebre;
+    }
+
+    //-
+    function setcheckgarganta($checkgarganta)
+    {
+        $this->checkgarganta = $checkgarganta;
+    }
+    function getcheckgarganta()
+    {
+        return $this->checkgarganta;
+    }
+    function setcheckdescgarganta($descgarganta)
+    {
+        $this->descgarganta = $descgarganta;
+    }
+    function getcheckdescgarganta()
+    {
+        return $this->descgarganta;
+    }
+
+    //-
+    function setcheckcovid($checkcovid)
+    {
+        $this->checkcovid = $checkcovid;
+    }
+    function getcheckcovid()
+    {
+        return $this->checkcovid;
+    }
+    function setcheckdesccovid($desccovid)
+    {
+        $this->desccovid = $desccovid;
+    }
+    function getcheckdesccovid()
+    {
+        return $this->desccovid;
     }
 
 
-    function setcheckDiris($checkDiris)
+    //-
+    function setcheckembarazo($checkembarazo)
     {
-        $this->checkDiris = $checkDiris;
+        $this->checkembarazo = $checkembarazo;
     }
-    function getcheckDiris()
+    function getcheckembarazo()
     {
-        return $this->checkDiris;
+        return $this->checkembarazo;
+    }
+    function setcheckdescembarazo($descembarazo)
+    {
+        $this->descembarazo = $descembarazo;
+    }
+    function getcheckdescembarazo()
+    {
+        return $this->descembarazo;
     }
 
 
-    function setcheckVacuna($checkVacuna)
+    //-
+    function setcheckalergia($checkalergia)
     {
-        $this->checkVacuna = $checkVacuna;
+        $this->checkalergia = $checkalergia;
     }
-    function getcheckVacuna()
+    function getcheckalergia()
     {
-        return $this->checkVacuna;
+        return $this->checkalergia;
     }
-    
+    function setcheckdescalergia($descalergia)
+    {
+        $this->descalergia = $descalergia;
+    }
+    function getcheckdescalergia()
+    {
+        return $this->descalergia;
+    }
+    //***************************************************/
+
+
+
 
     function setidBrigada($idBrigada)
     {
@@ -144,7 +235,6 @@ class Personal
         return $this->idBrigada;
     }
 
-    
     function setobservacion($observacion)
     {
         $this->observacion = $observacion;
@@ -161,5 +251,71 @@ class Personal
     function getestado()
     {
         return $this->estado;
+    }
+
+    function setfechaRegistro($fechaRegistro)
+    {
+        $this->fechaRegistro = $fechaRegistro;
+    }
+    function getfechaRegistro()
+    {
+        return $this->fechaRegistro;
+    }
+    
+
+    function setplanilla($planilla)
+    {
+        $this->planilla = $planilla;
+    }
+    function getplanilla()
+    {
+        return $this->planilla;
+    }
+
+    function setfoto($foto)
+    {
+        $this->foto = $foto;
+    }
+    function getfoto()
+    {
+        return $this->foto;
+    }
+
+    function settelefono($telefono)
+    {
+        $this->telefono = $telefono;
+    }
+    function getTelefono()
+    {
+        return $this->telefono;
+    }
+
+    //estadoDosisDos
+    function setestadoDosisUno($estadoDosisUno)
+    {
+        $this->estadoDosisUno = $estadoDosisUno;
+    }
+    function getestadoDosisUno()
+    {
+        return $this->estadoDosisUno;
+    }
+    
+    function setestadoDosisDos($estadoDosisDos)
+    {
+        $this->estadoDosisDos = $estadoDosisDos;
+    }
+    function getestadoDosisDos()
+    {
+        return $this->estadoDosisDos;
+    }
+
+    //cartilla
+    function setcartilla($cartilla)
+    {
+        $this->cartilla = $cartilla;
+    }
+    function getcartilla()
+    {
+        return $this->cartilla;
     }
 }

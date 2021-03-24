@@ -1,7 +1,6 @@
 <?php
 
-include_once('control/controll.php');
-
+include_once('controller/controll.php');
 
 $controller = new Control();
 

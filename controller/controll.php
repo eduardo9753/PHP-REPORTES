@@ -1,11 +1,11 @@
 <?php
 
-include_once('model/model.php');//MODELO
-include_once('datos/Personal.php');//DATOS 
+include_once('model/model.php'); //MODELO
+include_once('datos/Personal.php'); //DATOS 
 include_once('datos/paginacion.php');
 
-require('lib/pdf/fpdf.php');//PDF
-require 'lib/Excelspreadsheet/vendor/autoload.php';//EXCEL SPREADSHEET
+require('lib/pdf/fpdf.php'); //PDF
+require 'lib/Excelspreadsheet/vendor/autoload.php'; //EXCEL SPREADSHEET
 
 class Control
 {
@@ -21,7 +21,7 @@ class Control
         include_once('view/busqueda/search.php');
     }
 
-    public function search()      
+    public function search()
     {
         include_once('view/busqueda/search.php');
     }
@@ -29,7 +29,8 @@ class Control
 
 
     /************************************************EXCEL FORMULARIO*************************************/
-    public function excel(){
+    public function excel()
+    {
         $dataPlanilla = $this->MODEL->dataPlanilla();
         include_once('view/excel/excel.php');
     }
@@ -38,18 +39,17 @@ class Control
     public function excelDatos()
     {
         try {
-            if(isset($_REQUEST['btn_excel'])){
-                  $planilla = $_POST['cboPlanilla'];
-                  $estado = $_POST['cboEstado'];
-                  $fecha_registro = $_POST['txt_fecha_registro'];
-                  $dataExcel = $this->MODEL->datosExcel($planilla,$estado,$fecha_registro);
-                  include_once('view/excel/excelSpresst.php');
+            if (isset($_REQUEST['btn_excel'])) {
+                $planilla = $_POST['cboPlanilla'];
+                $estado = $_POST['cboEstado'];
+                $fecha_registro = $_POST['txt_fecha_registro'];
+                $dataExcel = $this->MODEL->datosExcel($planilla, $estado, $fecha_registro);
+                include_once('view/excel/excelSpresst.php');
             }
         } catch (\Throwable $th) {
             throw $th;
         }
     }
-
     //EXCEL VACUNADOS GENERALES
     public function VacunadosGeneral()
     {
@@ -60,7 +60,6 @@ class Control
             throw $th;
         }
     }
-
     //EXCEL VACUNADOS SEGUNDA DOSIS MARZO
     public function VacunadoSegundaDosis()
     {
@@ -90,19 +89,21 @@ class Control
 
 
     /*******************************FORMULARIO PARA BUSCAR PERSONAL PARA SUBIR CARTILLAS**********************/
-    public function cartilla(){
+    public function cartilla()
+    {
         include_once('view/busqueda/cartilla.php');
     }
 
     //FORMULARIO PARA SUBIR MI CARTILLA LOS QUE SE VAN A REGISTRAR EL LUNES "15/03/2021"
-    public function cartillaPersonal(){
+    public function cartillaPersonal()
+    {
         try {
-            if(isset($_REQUEST['btnBuscar'])){
-               
+            if (isset($_REQUEST['btnBuscar'])) {
+
                 $dataPersonal = $this->MODEL->dataPersonalByDNI($_POST['txt_dni']);
-                if($dataPersonal && $dataPersonal->dosisUno == 6 && $dataPersonal->cartilla == 'cartilla.jpg'){
+                if ($dataPersonal && $dataPersonal->dosisUno == 6 && $dataPersonal->cartilla == 'cartilla.jpg') {
                     include_once('view/triaje/cartillaPersonal.php');
-                } else if($dataPersonal && $dataPersonal->dosisUno == 6 && $dataPersonal->cartilla !== 'cartilla.jpg'){
+                } else if ($dataPersonal && $dataPersonal->dosisUno == 6 && $dataPersonal->cartilla !== 'cartilla.jpg') {
                     $message = "YA SE ACTUALIZO SU CARTILLA";
                     echo $this->MODEL->error($message);
                     include_once('view/busqueda/cartilla.php');
@@ -117,9 +118,10 @@ class Control
         }
     }
 
-    public function updateCartillaPersonal(){
+    public function updateCartillaPersonal()
+    {
         try {
-            if(isset($_REQUEST['btnUpdateCartilla'])){
+            if (isset($_REQUEST['btnUpdateCartilla'])) {
                 $directorio = "cartillas/";
                 $cartilla = $directorio . basename($_FILES['cartilla']['name']);
                 if (move_uploaded_file($_FILES['cartilla']['tmp_name'], $cartilla)) {
@@ -153,7 +155,7 @@ class Control
                     $personal->setestadoDosisDos($dataCartilla->dosisDos);
                     $personal->setcartilla($cartilla);
                     $personal->setidDNI($_POST['txt_dni']);
-    
+
                     if ($this->MODEL->actualizarReporte($personal)) {
                         $message = "SE ACTUALIZO CORRECTAMENTE LOS DATOS";
                         echo $this->MODEL->success($message);
@@ -174,20 +176,22 @@ class Control
         }
     }
     /*********************************************************************************************************/
-    
+
 
 
 
 
     /**********************************PARA VER LAS CARTILLAS DE LA BASE DE DATOS*****************************/
-    public function verCartilla(){
+    public function verCartilla()
+    {
         include_once('view/busqueda/verCartilla.php');
     }
 
-    public function verCartillaPersonal(){
-        if(isset($_REQUEST['btnBuscar'])){
+    public function verCartillaPersonal()
+    {
+        if (isset($_REQUEST['btnBuscar'])) {
             $dataPersonal = $this->MODEL->dataPersonalByDNI($_POST['txt_dni']);
-            if($dataPersonal && $dataPersonal->estado == 1 && $dataPersonal->dosisUno == 6){
+            if ($dataPersonal && $dataPersonal->estado == 1 && $dataPersonal->dosisUno == 6) {
                 include_once('view/triaje/verCartillaPersonal.php');
             } else {
                 $message = "NO SE PUEDO ENCONTRAR EL DATO";
@@ -196,33 +200,44 @@ class Control
             }
         }
     }
-   /**********************************************************************************************************/
+    /**********************************************************************************************************/
 
 
 
 
 
     /*********ACTUALIZAR PERSONAL PARA LA PRIMERA DOSIS DE LA VACUNA Y CAPTURAR FECHA DE REGISTRO*************/
-    public function updatePersonal() 
+    public function updatePersonal()
     {
         try {
             if (isset($_REQUEST['btnUpdate'])) {
                 if (isset($_POST['cboEstado'])) {
-                    if ($_POST['cboEstado'] == 3){
-                        $check_fiebre = '--'; $txt_fiebre = '---';
-                        $check_garganta = '--'; $txt_garganta = '---';
-                        $check_covid = '--'; $txt_covid = '---';
-                        $check_embarazo = '--'; $txt_embarazo = '---';
-                        $check_alergia = '--'; $txt_alergia = '---';
+                    if ($_POST['cboEstado'] == 3) {
+                        $check_fiebre = '--';
+                        $txt_fiebre = '---';
+                        $check_garganta = '--';
+                        $txt_garganta = '---';
+                        $check_covid = '--';
+                        $txt_covid = '---';
+                        $check_embarazo = '--';
+                        $txt_embarazo = '---';
+                        $check_alergia = '--';
+                        $txt_alergia = '---';
                         $estado = 3;
                         $dosisUno = 0;
                         $dosisDos = 0;
-                    } if($_POST['cboEstado'] == 4){
-                        $check_fiebre = '--'; $txt_fiebre = '---';
-                        $check_garganta = '--'; $txt_garganta = '---';
-                        $check_covid = '--'; $txt_covid = '---';
-                        $check_embarazo = '--'; $txt_embarazo = '---';
-                        $check_alergia = '--'; $txt_alergia = '---';
+                    }
+                    if ($_POST['cboEstado'] == 4) {
+                        $check_fiebre = '--';
+                        $txt_fiebre = '---';
+                        $check_garganta = '--';
+                        $txt_garganta = '---';
+                        $check_covid = '--';
+                        $txt_covid = '---';
+                        $check_embarazo = '--';
+                        $txt_embarazo = '---';
+                        $check_alergia = '--';
+                        $txt_alergia = '---';
                         $estado = 4;
                         $dosisUno = 0;
                         $dosisDos = 0;
@@ -265,7 +280,8 @@ class Control
                     $txt_alergia = $_POST['txt_alergia'];
                 }
                 //VALIDANDO SI TODOS LOS CHECK SON "NO"
-                if (isset($_POST['check_fiebre1']) && isset($_POST['check_garganta1']) &&
+                if (
+                    isset($_POST['check_fiebre1']) && isset($_POST['check_garganta1']) &&
                     isset($_POST['check_covid1']) &&  isset($_POST['check_embarazo1']) && isset($_POST['check_alergia1'])
                 ) {
                     $estado = 1;
@@ -273,14 +289,15 @@ class Control
                     $dosisDos = 0;
                 }
                 //VALIDACION REVOCATORIA SI AL MENOS TIENE UN  CHECK "SI" MARCADO
-                if (isset($_POST['check_fiebre2']) || isset($_POST['check_garganta2']) ||
+                if (
+                    isset($_POST['check_fiebre2']) || isset($_POST['check_garganta2']) ||
                     isset($_POST['check_covid2']) || isset($_POST['check_embarazo2']) || isset($_POST['check_alergia2'])
                 ) {
                     $estado = 1;
                     $dosisUno = 6;
                     $dosisDos = 0;
                 }
-                
+
                 $personal = new Personal();
                 $directorio = "upload/";
                 $archivo = $directorio . basename($_FILES['file']['name']);
@@ -314,21 +331,21 @@ class Control
                     $personal->setestadoDosisDos($dosisDos);
                     $personal->setcartilla($cartilla);
                     $personal->setidDNI($_POST['txt_dni']);
-    
+
                     if ($this->MODEL->actualizarReporte($personal)) {
                         $personal->setidDNI($_POST['txt_dni']);
                         $dataPersonal = $this->MODEL->dataPersonal($personal);
-                        if($dataPersonal && $dataPersonal->estado == 1){
+                        if ($dataPersonal && $dataPersonal->estado == 1) {
                             $message = "SE ACTUALIZO COREECTAMENTE LOS DATOS DEL PERSONAL";
                             echo $this->MODEL->success($message);
                             //FORMULARIO TRIAJE Y CONSENTIMIENTO INFORMADO
                             include_once('view/triaje/dataTriajeActualizado.php');
-                        } else if($dataPersonal && $dataPersonal->estado == 3){
-                            $message = "EL PERSONAL CON DNI :".$_REQUEST['txt_dni'].". DESISTIO A VACUNARSE";
+                        } else if ($dataPersonal && $dataPersonal->estado == 3) {
+                            $message = "EL PERSONAL CON DNI :" . $_REQUEST['txt_dni'] . ". DESISTIO A VACUNARSE";
                             echo $this->MODEL->error($message);
                             include_once('view/busqueda/search.php');            //DESISTIERON
-                        } else if($dataPersonal && $dataPersonal->estado == 4) {
-                            $message = "EL PERSONAL CON DNI :".$_REQUEST['txt_dni']." FUE VACUNADO EN OTRO CENTRO DE SALUD";
+                        } else if ($dataPersonal && $dataPersonal->estado == 4) {
+                            $message = "EL PERSONAL CON DNI :" . $_REQUEST['txt_dni'] . " FUE VACUNADO EN OTRO CENTRO DE SALUD";
                             echo $this->MODEL->error($message);
                             include_once('view/busqueda/search.php');           //VACUNADO EN OTRO CENTRO DE SALUD
                         }
@@ -369,17 +386,17 @@ class Control
                     if ($this->MODEL->actualizarReporte($personal)) {
                         $personal->setidDNI($_POST['txt_dni']);
                         $dataPersonal = $this->MODEL->dataPersonal($personal);
-                        if($dataPersonal && $dataPersonal->estado == 1){
+                        if ($dataPersonal && $dataPersonal->estado == 1) {
                             $message = "SE ACTUALIZO COREECTAMENTE LOS DATOS DEL PERSONAL";
                             echo $this->MODEL->success($message);
                             //FORMULARIO TRIAJE Y CONSENTIMIENTO INFORMADO
                             include_once('view/triaje/dataTriajeActualizado.php');
-                        } else if($dataPersonal && $dataPersonal->estado == 3){
-                            $message = "EL PERSONAL CON DNI :".$_REQUEST['txt_dni'].". DESISTIO A VACUNARSE";
+                        } else if ($dataPersonal && $dataPersonal->estado == 3) {
+                            $message = "EL PERSONAL CON DNI :" . $_REQUEST['txt_dni'] . ". DESISTIO A VACUNARSE";
                             echo $this->MODEL->error($message);
                             include_once('view/busqueda/search.php');            //DESISTIERON
-                        } else if($dataPersonal && $dataPersonal->estado == 4) {
-                            $message = "EL PERSONAL CON DNI :".$_REQUEST['txt_dni']." FUE VACUNADO EN OTRO CENTRO DE SALUD";
+                        } else if ($dataPersonal && $dataPersonal->estado == 4) {
+                            $message = "EL PERSONAL CON DNI :" . $_REQUEST['txt_dni'] . " FUE VACUNADO EN OTRO CENTRO DE SALUD";
                             echo $this->MODEL->error($message);
                             include_once('view/busqueda/search.php');           //VACUNADO EN OTRO CENTRO DE SALUD
                         }
@@ -402,9 +419,10 @@ class Control
 
 
     /*****ACTUALIZACION DE LA SEGUNDA DOSIS DE LA VACUNA  /febrero/marzo/abril "NO SE LES SUBIRA CARTILLA"***/
-    public function updateSegundaDosis(){
+    public function updateSegundaDosis()
+    {
         try {
-            if(isset($_REQUEST['btnUpdateDosisDos'])){
+            if (isset($_REQUEST['btnUpdateDosisDos'])) {
                 $dataDosisDos = $this->MODEL->dataPersonalByDNI($_POST['txt_dni']);
                 $dosisUno = 6;
                 $dosisDos = 7;
@@ -437,17 +455,17 @@ class Control
                 $personal->setestadoDosisDos($dosisDos);
                 $personal->setcartilla($cartilla);
                 $personal->setidDNI($_POST['txt_dni']);
-    
+
                 if ($this->MODEL->actualizarReporte($personal)) {
                     $message = "SE ACTUALIZO LA SEGUNDA DOSIS DEL PERSONAL....PUEDE DIGITAR OTRO DNI";
                     echo $this->MODEL->success($message);
-                    include_once('view/busqueda/search.php'); 
+                    include_once('view/busqueda/search.php');
                 } else {
                     $message = "NO SE ACTUALIZO LOS DATOS";
                     echo $this->MODEL->error($message);
                     include_once('view/busqueda/search.php');
                 }
-            }        
+            }
         } catch (\Throwable $th) {
             throw $th;
         }
@@ -459,11 +477,12 @@ class Control
 
 
     /***********************************FORMULARIO BUSQUEDA DESISTIR VACUNA**********************************/
-    public function desistirPersonal(){
+    public function desistirPersonal()
+    {
         include_once('view/busqueda/desistir.php');
     }
     //FORMULARIO PINTANDO DATOS DE LOS QUE DESISTIERON
-    public function dataDesistirPersonal() 
+    public function dataDesistirPersonal()
     {
         try {
             if (isset($_REQUEST['btnBuscar'])) {
@@ -471,28 +490,29 @@ class Control
                     $personal = new Personal();
                     $personal->setidDNI($_POST['txt_dni']);
                     $dataPersonal = $this->MODEL->dataPersonal($personal);
-                    if($dataPersonal && $dataPersonal->estado == 1 ){
-                        include_once('view/triaje/desistirVacuna.php'); 
-                    } else if($dataPersonal && $dataPersonal->estado == 3){
-                        $message = "EL PERSONAL CON DNI CON EL DNI : ".$_REQUEST['txt_dni']." YA DESISTIO A VACUNARSE";
+                    if ($dataPersonal && $dataPersonal->estado == 1) {
+                        include_once('view/triaje/desistirVacuna.php');
+                    } else if ($dataPersonal && $dataPersonal->estado == 3) {
+                        $message = "EL PERSONAL CON DNI CON EL DNI : " . $_REQUEST['txt_dni'] . " YA DESISTIO A VACUNARSE";
                         echo $this->MODEL->error($message);
                         include_once('view/busqueda/search.php'); //SIN DATOS
                     } else {
-                        $message = "EL PERSONAL CON DNI CON EL DNI : ".$_REQUEST['txt_dni']." NO SE PUDO ENCONTRAR";
+                        $message = "EL PERSONAL CON DNI CON EL DNI : " . $_REQUEST['txt_dni'] . " NO SE PUDO ENCONTRAR";
                         echo $this->MODEL->error($message);
                         include_once('view/busqueda/search.php'); //SIN DATOS
                     }
                 }
-            } 
+            }
         } catch (\Throwable $th) {
             throw $th;
         }
     }
     //ACTUALIZANDO LOS DATOS A REVOCADOS EN LA COLA
-    public function desistirUpdate(){
-        if(isset($_REQUEST['btnDesistir'])){
+    public function desistirUpdate()
+    {
+        if (isset($_REQUEST['btnDesistir'])) {
             if (isset($_POST['cboEstado'])) {
-                if ($_POST['cboEstado'] == 3){
+                if ($_POST['cboEstado'] == 3) {
                     $estado = 3;
                 } else {
                     $estado = 3;
@@ -532,7 +552,7 @@ class Control
             if ($this->MODEL->actualizarReporte($personal)) {
                 $message = "SE ACTULIZO EL PERSONAL A ESTADO DESISTIR VACUNACION";
                 echo $this->MODEL->success($message);
-                include_once('view/busqueda/search.php'); 
+                include_once('view/busqueda/search.php');
             } else {
                 $message = "NO SE ACTUALIZO LOS DATOS";
                 echo $this->MODEL->error($message);
@@ -548,7 +568,7 @@ class Control
 
 
     /*********************************TRIAJE DEL PERSONAL POR ESTADO*****************************************/
-    public function dataPersonal() 
+    public function dataPersonal()
     {
         try {
             if (isset($_REQUEST['btnBuscar'])) {
@@ -556,35 +576,35 @@ class Control
                     $personal = new Personal();
                     $personal->setidDNI($_POST['txt_dni']);
                     $dataPersonal = $this->MODEL->dataPersonal($personal);
-                    if($dataPersonal && $dataPersonal->estado == 0 && $dataPersonal->dosisUno == 0 && $dataPersonal->dosisDos == 0){
+                    if ($dataPersonal && $dataPersonal->estado == 0 && $dataPersonal->dosisUno == 0 && $dataPersonal->dosisDos == 0) {
                         //FORMULARIO PARA ACTUALIZAR A PRIMERA DOSIS DE VACUNACION
-                        include_once('view/triaje/dataTriaje.php'); 
+                        include_once('view/triaje/dataTriaje.php');
                     } else if ($dataPersonal &&  $dataPersonal->fechaRegistro == "2021-02-22" && $dataPersonal->estado == 1 && $dataPersonal->dosisUno == 6 && $dataPersonal->dosisDos == 0) {
                         //FORMULARIO DE VACUNA SEGUNDA DOSIS FEBRERO 2021-02-22 (FECHA QUEDA REGISTRO)
-                        include_once('view/triaje/SegundaDosisFebrero.php');   
+                        include_once('view/triaje/SegundaDosisFebrero.php');
                     } else if ($dataPersonal &&  $dataPersonal->fechaRegistro == "2021-03-11" && $dataPersonal->estado == 1 && $dataPersonal->dosisUno == 6 && $dataPersonal->dosisDos == 0) {
                         //PROXIMAMENTE FORMULARIO DE VACUNACION PARA LOS QUE SE VACUNARON EN MARZO
-                        $message = "EL PERSONAL CON DNI :".$_REQUEST['txt_dni'].". DEBE VACUNARSE EN EL MES DE ABRIL";
-                        echo $this->MODEL->error($message);
-                        include_once('view/busqueda/search.php');  
-                    } else if ($dataPersonal && $dataPersonal->estado == 1 && $dataPersonal->dosisUno == 6 && $dataPersonal->dosisDos == 7) {
-                        //MENSAJE PARA LOS QUE YA SE APLICO LA PRIMERA Y SEGUNDA VACUNA
-                        $message = "EL PERSONAL CON DNI :".$_REQUEST['txt_dni'].". YA OBTUVO LAS DOS DOSIS DE LA VACUNA";
+                        $message = "EL PERSONAL CON DNI :" . $_REQUEST['txt_dni'] . ". DEBE VACUNARSE EN EL MES DE ABRIL";
                         echo $this->MODEL->error($message);
                         include_once('view/busqueda/search.php');
-                    } else if ($dataPersonal /*&& $dataPersonal->fechaRegistro == "2021-03-14"*/ && $dataPersonal->estado == 1 && $dataPersonal->dosisUno == 6 && $dataPersonal->dosisDos == 0){
+                    } else if ($dataPersonal && $dataPersonal->estado == 1 && $dataPersonal->dosisUno == 6 && $dataPersonal->dosisDos == 7) {
+                        //MENSAJE PARA LOS QUE YA SE APLICO LA PRIMERA Y SEGUNDA VACUNA
+                        $message = "EL PERSONAL CON DNI :" . $_REQUEST['txt_dni'] . ". YA OBTUVO LAS DOS DOSIS DE LA VACUNA";
+                        echo $this->MODEL->error($message);
+                        include_once('view/busqueda/search.php');
+                    } else if ($dataPersonal /*&& $dataPersonal->fechaRegistro == "2021-03-14"*/ && $dataPersonal->estado == 1 && $dataPersonal->dosisUno == 6 && $dataPersonal->dosisDos == 0) {
                         //FORMULARIO TRIAJE CONSENTIMIENTO INFORMADO Y CARTILLA DE VACUNACION
-                        include_once('view/triaje/dataTriajeActualizado.php'); 
+                        include_once('view/triaje/dataTriajeActualizado.php');
                     } else if ($dataPersonal && $dataPersonal->estado == 3) {
-                        $message = "EL PERSONAL CON DNI :".$_REQUEST['txt_dni'].". DESISTIO A VACUNARSE";
+                        $message = "EL PERSONAL CON DNI :" . $_REQUEST['txt_dni'] . ". DESISTIO A VACUNARSE";
                         echo $this->MODEL->error($message);
                         include_once('view/busqueda/search.php');            //DESISTIERON
-                    } else if($dataPersonal && $dataPersonal->estado == 4){
-                        $message = "EL PERSONAL CON DNI :".$_REQUEST['txt_dni']." FUE VACUNADO EN OTRO CENTRO DE SALUD";
+                    } else if ($dataPersonal && $dataPersonal->estado == 4) {
+                        $message = "EL PERSONAL CON DNI :" . $_REQUEST['txt_dni'] . " FUE VACUNADO EN OTRO CENTRO DE SALUD";
                         echo $this->MODEL->error($message);
                         include_once('view/busqueda/search.php');           //VACUNADO EN OTRO CENTRO DE SALUD
                     } else {
-                        $message = "NO SE ENCONTRO DATOS CON EL DNI : ".$_REQUEST['txt_dni'];
+                        $message = "NO SE ENCONTRO DATOS CON EL DNI : " . $_REQUEST['txt_dni'];
                         echo $this->MODEL->error($message);
                         include_once('view/busqueda/search.php'); //SIN DATOS
                     }
@@ -606,7 +626,7 @@ class Control
 
 
 
-    /***********************************REPORTE PDF DE LOS TRIAJES YA RESPONDIDOS****************************/ 
+    /***********************************REPORTE PDF DE LOS TRIAJES YA RESPONDIDOS****************************/
     public function reporte()
     {
         try {
@@ -638,7 +658,8 @@ class Control
         }
     }
     //REPORTE DE PDF PARA HOJA DE CARTILLA DE VACUNACION
-    public function cartillaVacuna() {
+    public function cartillaVacuna()
+    {
         try {
             if (isset($_REQUEST['id'])) {
                 $personal = new Personal();
@@ -651,12 +672,12 @@ class Control
         }
     }
     /*********************************************************************************************************/
-    
 
 
 
 
-    
+
+
     /*****************************************ESTADISTICAS DE VACUNACION DATOS********************************/
     public function esPersonalVacunado()
     {
@@ -671,9 +692,9 @@ class Control
             //PORCENTAJE DE VACUNADOS
             $porcentajeSinVacuna = $this->MODEL->obtenerPorcentaje($personalSinVacuna, $personalTotal);
             $porcentajeConVacuna = $this->MODEL->obtenerPorcentaje($personalConVacuna, $personalTotal);
-            $porcentajeRevocado = $this->MODEL->obtenerPorcentaje($personalRevocado,$personalTotal);
-            $porcentajeDesistir = $this->MODEL->obtenerPorcentaje($personalDesistir,$personalTotal);
-            $porcentajeOtroCentroSalud = $this->MODEL->obtenerPorcentaje($personalOtroCentroSalud,$personalTotal);
+            $porcentajeRevocado = $this->MODEL->obtenerPorcentaje($personalRevocado, $personalTotal);
+            $porcentajeDesistir = $this->MODEL->obtenerPorcentaje($personalDesistir, $personalTotal);
+            $porcentajeOtroCentroSalud = $this->MODEL->obtenerPorcentaje($personalOtroCentroSalud, $personalTotal);
             $porcentajeTotal = $this->MODEL->obtenerPorcentaje($personalTotal, $personalTotal);
             include_once('view/estadistica/datosVacunacion.php');
         } catch (\Throwable $th) {
@@ -687,30 +708,30 @@ class Control
 
 
 
-     /*************************************REGISTROS Y PAGINACION DE DATOS************************************/
-     public function registros()
-     {
-         $datosTotales = intval($this->MODEL->countRegistroNoVacuna());
-         $datos_x_paginas = 25;
-         $paginas = ceil($datosTotales / $datos_x_paginas);
-         $iniciar = (($_GET['pagina'] - 1) * $datos_x_paginas);
-         $paginacion = new Paginacion();
-         $paginacion->setiniciar($iniciar);
-         $paginacion->setdatos_x_paginas($datos_x_paginas);
-         $paginacionData = $this->MODEL->registroPersonal($paginacion); //PARA MI RECORRIDO FOREACH 
-         include_once('view/registros/registros.php');
-     }
-     public function registrosActualizados()
-     {
-         $datosTotales = intval($this->MODEL->countRegistroVacuna());
-         $datos_x_paginas = 25;
-         $paginas = ceil($datosTotales / $datos_x_paginas);
-         $iniciar = (($_GET['pagina'] - 1) * $datos_x_paginas);
-         $paginacion = new Paginacion();
-         $paginacion->setiniciar($iniciar);
-         $paginacion->setdatos_x_paginas($datos_x_paginas);
-         $paginacionData = $this->MODEL->registroPersonalActualizado($paginacion); //PARA MI RECORRIDO FOREACH  
-         include_once('view/registros/registrosActualizados.php');
-     } 
-    /**********************************************************************************************************/ 
+    /*************************************REGISTROS Y PAGINACION DE DATOS************************************/
+    public function registros()
+    {
+        $datosTotales = intval($this->MODEL->countRegistroNoVacuna());
+        $datos_x_paginas = 25;
+        $paginas = ceil($datosTotales / $datos_x_paginas);
+        $iniciar = (($_GET['pagina'] - 1) * $datos_x_paginas);
+        $paginacion = new Paginacion();
+        $paginacion->setiniciar($iniciar);
+        $paginacion->setdatos_x_paginas($datos_x_paginas);
+        $paginacionData = $this->MODEL->registroPersonal($paginacion); //PARA MI RECORRIDO FOREACH 
+        include_once('view/registros/registros.php');
+    }
+    public function registrosActualizados()
+    {
+        $datosTotales = intval($this->MODEL->countRegistroVacuna());
+        $datos_x_paginas = 25;
+        $paginas = ceil($datosTotales / $datos_x_paginas);
+        $iniciar = (($_GET['pagina'] - 1) * $datos_x_paginas);
+        $paginacion = new Paginacion();
+        $paginacion->setiniciar($iniciar);
+        $paginacion->setdatos_x_paginas($datos_x_paginas);
+        $paginacionData = $this->MODEL->registroPersonalActualizado($paginacion); //PARA MI RECORRIDO FOREACH  
+        include_once('view/registros/registrosActualizados.php');
+    }
+    /**********************************************************************************************************/
 }
